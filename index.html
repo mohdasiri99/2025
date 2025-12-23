@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>خطة التطوير الفردية IDP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {font-family: "Tahoma", Arial; background:#eef2f7; margin:0; padding:0;}
+    header {background:#1f4e79; color:white; padding:20px; text-align:center;}
+    header h1 {margin:0;}
+    header p {margin:5px 0 0;}
+    .container {max-width:1000px; margin:30px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1);}    
+    h2 {color:#1f4e79; border-bottom:2px solid #ddd; padding-bottom:5px;}
+    label {display:block; margin-top:15px; font-weight:bold;}
+    input, select, textarea {width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:6px;}
+    table {width:100%; border-collapse:collapse; margin-top:15px;}
+    th, td {border:1px solid #ccc; padding:10px; text-align:center;}
+    th {background:#f0f4f8;}
+    .actions {text-align:center; margin-top:30px;}
+    button {background:#1f4e79; color:white; border:none; padding:12px 25px; font-size:16px; border-radius:8px; cursor:pointer;}
+    button:hover {background:#163a5c;}
+    footer {text-align:center; margin:30px 0; color:#555; font-size:14px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>خطة التطوير الفردية IDP</h1>
+  <p>إعداد / محمد علي عسيري – كوتش تعليمي</p>
+</header>
+
+<div class="container">
+
+<h2>1️⃣ البيانات الأولية</h2>
+<label>اسم المعلم</label><input type="text">
+<label>التخصص</label><input type="text">
+<label>المدرسة</label><input type="text">
+<label>المرحلة الدراسية</label>
+<select><option>ابتدائي</option><option>متوسط</option><option>ثانوي</option></select>
+<label>سنوات الخبرة</label><input type="number">
+<label>العام الدراسي</label><input type="text" placeholder="1446 هـ">
+
+<h2>2️⃣ التشخيص المهني</h2>
+<table>
+<tr><th>المجال</th><th>منخفض</th><th>متوسط</th><th>مرتفع</th></tr>
+<tr><td>التخطيط للتدريس</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
+<tr><td>استراتيجيات التدريس</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
+<tr><td>التقويم</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
+<tr><td>إدارة الصف</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
+</table>
+
+<h2>3️⃣ الأهداف الذكية SMART</h2>
+<textarea rows="4" placeholder="اكتب الهدف الذكي (محدد – قابل للقياس – قابل للتحقيق – ذو صلة – محدد بزمن)"></textarea>
+
+<h2>4️⃣ تطبيق نموذج 70-20-10</h2>
+<table>
+<tr><th>النشاط</th><th>نوعه (70/20/10)</th><th>المدة</th><th>الأثر المتوقع</th></tr>
+<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<h2>5️⃣ متابعة الأداء وقياس الأثر</h2>
+<table>
+<tr><th>المؤشر</th><th>قبل</th><th>بعد</th><th>نسبة التحسن</th></tr>
+<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="actions">
+  <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+</div>
+
+</div>
+
+<footer>
+  جميع الحقوق محفوظة © محمد علي عسيري – كوتش تعليمي
+</footer>
+
+</body>
+</html>
