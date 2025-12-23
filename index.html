@@ -1,80 +1,197 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>خطة التطوير الفردية IDP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {font-family: "Tahoma", Arial; background:#eef2f7; margin:0; padding:0;}
-    header {background:#1f4e79; color:white; padding:20px; text-align:center;}
-    header h1 {margin:0;}
-    header p {margin:5px 0 0;}
-    .container {max-width:1000px; margin:30px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1);}    
-    h2 {color:#1f4e79; border-bottom:2px solid #ddd; padding-bottom:5px;}
-    label {display:block; margin-top:15px; font-weight:bold;}
-    input, select, textarea {width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:6px;}
-    table {width:100%; border-collapse:collapse; margin-top:15px;}
-    th, td {border:1px solid #ccc; padding:10px; text-align:center;}
-    th {background:#f0f4f8;}
-    .actions {text-align:center; margin-top:30px;}
-    button {background:#1f4e79; color:white; border:none; padding:12px 25px; font-size:16px; border-radius:8px; cursor:pointer;}
-    button:hover {background:#163a5c;}
-    footer {text-align:center; margin:30px 0; color:#555; font-size:14px;}
-  </style>
+<meta charset="UTF-8">
+<title>جلسة كوتشينج احترافية – GROW</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Cairo',sans-serif;
+  background:linear-gradient(135deg,#eef2ff,#f8fafc);
+}
+.step{display:none}
+.step.active{display:block}
+.btn{
+  background:#4f46e5;
+  color:white;
+  padding:12px 28px;
+  border-radius:14px;
+  font-weight:800;
+}
+</style>
 </head>
-<body>
 
-<header>
-  <h1>خطة التطوير الفردية IDP</h1>
-  <p>إعداد / محمد علي عسيري – كوتش تعليمي</p>
-</header>
+<body class="text-slate-800">
 
-<div class="container">
+<div class="max-w-4xl mx-auto my-10 bg-white rounded-3xl shadow-2xl p-8">
 
-<h2>1️⃣ البيانات الأولية</h2>
-<label>اسم المعلم</label><input type="text">
-<label>التخصص</label><input type="text">
-<label>المدرسة</label><input type="text">
-<label>المرحلة الدراسية</label>
-<select><option>ابتدائي</option><option>متوسط</option><option>ثانوي</option></select>
-<label>سنوات الخبرة</label><input type="number">
-<label>العام الدراسي</label><input type="text" placeholder="1446 هـ">
+<!-- TITLE -->
+<h1 class="text-3xl font-extrabold text-center text-indigo-900 mb-4">
+جلسة كوتشينج احترافية – نموذج GROW
+</h1>
 
-<h2>2️⃣ التشخيص المهني</h2>
-<table>
-<tr><th>المجال</th><th>منخفض</th><th>متوسط</th><th>مرتفع</th></tr>
-<tr><td>التخطيط للتدريس</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
-<tr><td>استراتيجيات التدريس</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
-<tr><td>التقويم</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
-<tr><td>إدارة الصف</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
-</table>
+<!-- TIMER -->
+<div class="mb-8 bg-slate-100 rounded-xl overflow-hidden shadow-inner">
+  <div class="flex justify-between items-center px-4 py-2 text-xs font-bold">
+    <span>⏳ الوقت المتبقي في الجلسة</span>
+    <span id="timeText">45:00</span>
+  </div>
+  <div class="h-2 bg-slate-200">
+    <div id="timeBar" class="h-2 bg-emerald-500 transition-all duration-1000" style="width:100%"></div>
+  </div>
+</div>
 
-<h2>3️⃣ الأهداف الذكية SMART</h2>
-<textarea rows="4" placeholder="اكتب الهدف الذكي (محدد – قابل للقياس – قابل للتحقيق – ذو صلة – محدد بزمن)"></textarea>
+<!-- STEP 1 -->
+<div id="step1" class="step active">
+<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🎯 G – الهدف</h2>
+<textarea id="goal" class="w-full border rounded-xl p-3" placeholder="ما الهدف الذي تريد تحقيقه؟"></textarea>
+<input id="goalRate" type="number" min="1" max="10"
+class="mt-3 border rounded-xl p-2 w-40" placeholder="أهميته 1–10">
+<button onclick="nextStep(1)" class="btn mt-4">التالي</button>
+</div>
 
-<h2>4️⃣ تطبيق نموذج 70-20-10</h2>
-<table>
-<tr><th>النشاط</th><th>نوعه (70/20/10)</th><th>المدة</th><th>الأثر المتوقع</th></tr>
-<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
-<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
-<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
-</table>
+<!-- STEP 2 -->
+<div id="step2" class="step">
+<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🔍 R – الواقع</h2>
+<textarea id="reality" class="w-full border rounded-xl p-3" placeholder="أين أنت الآن؟"></textarea>
+<textarea id="challenges" class="w-full border rounded-xl p-3 mt-2" placeholder="ما التحديات؟"></textarea>
+<button onclick="nextStep(2)" class="btn mt-4">التالي</button>
+</div>
 
-<h2>5️⃣ متابعة الأداء وقياس الأثر</h2>
-<table>
-<tr><th>المؤشر</th><th>قبل</th><th>بعد</th><th>نسبة التحسن</th></tr>
-<tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
-</table>
+<!-- STEP 3 -->
+<div id="step3" class="step">
+<h2 class="text-xl font-extrabold text-indigo-700 mb-3">💡 O – الخيارات</h2>
+<textarea id="options" class="w-full border rounded-xl p-3" placeholder="ما الخيارات المتاحة؟"></textarea>
+<input id="bestOption" class="w-full border rounded-xl p-3 mt-2" placeholder="الخيار الأنسب الآن">
+<button onclick="nextStep(3)" class="btn mt-4">التالي</button>
+</div>
 
-<div class="actions">
-  <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+<!-- STEP 4 -->
+<div id="step4" class="step">
+<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🚀 W – الالتزام</h2>
+<input id="action" class="w-full border rounded-xl p-3" placeholder="أول خطوة عملية">
+<input id="date" type="date" class="mt-2 border rounded-xl p-2">
+<input id="commitment" type="number" min="1" max="10"
+class="mt-2 border rounded-xl p-2 w-40" placeholder="درجة الالتزام 1–10">
+
+<textarea id="risk" class="w-full border rounded-xl p-3 mt-3"
+placeholder="ما الذي سيحدث لو لم تنفذ؟"></textarea>
+
+<button onclick="nextStep(4)" class="btn mt-4">إنهاء الجلسة</button>
+</div>
+
+<!-- SUMMARY -->
+<div id="step5" class="step">
+<h2 class="text-xl font-extrabold text-emerald-700 mb-4">📋 ملخص الجلسة</h2>
+
+<div id="summary" class="text-sm space-y-2"></div>
+
+<hr class="my-4">
+
+<h3 class="font-bold">✍️ التوقيع</h3>
+<input id="client" class="border rounded-xl p-2 w-full mt-2" placeholder="اسم المستفيد">
+<input id="coach" class="border rounded-xl p-2 w-full mt-2" placeholder="اسم الكوتش">
+
+<p class="mt-3 text-xs text-slate-500">
+📅 متابعة بعد 7 أيام: <span id="followDate"></span>
+</p>
+
+<div class="flex gap-4 mt-6 flex-wrap">
+<button onclick="downloadPDF()" class="btn bg-emerald-600">تحميل PDF</button>
+<button onclick="saveSession()" class="btn bg-indigo-600">حفظ في سجل الإنجاز</button>
+</div>
+
+<p id="savedMsg" class="mt-3 text-green-600 font-bold hidden">
+✔️ تم حفظ الجلسة بنجاح
+</p>
 </div>
 
 </div>
 
-<footer>
-  جميع الحقوق محفوظة © محمد علي عسيري – كوتش تعليمي
-</footer>
+<script>
+/* -------- Steps Logic -------- */
+function nextStep(n){
+  let valid=true;
+  document.querySelectorAll(`#step${n} textarea, #step${n} input`)
+    .forEach(el=>{if(!el.value)valid=false});
+  if(!valid){alert("فضلاً أكمل جميع الحقول");return;}
+
+  document.getElementById(`step${n}`).classList.remove("active");
+  document.getElementById(`step${n+1}`).classList.add("active");
+
+  if(n===4) buildSummary();
+}
+
+/* -------- Summary -------- */
+function buildSummary(){
+  summary.innerHTML=`
+  <b>🎯 الهدف:</b> ${goal.value}<br>
+  <b>📊 أهميته:</b> ${goalRate.value}/10<br>
+  <b>🔍 الواقع:</b> ${reality.value}<br>
+  <b>⚠️ التحديات:</b> ${challenges.value}<br>
+  <b>💡 الخيارات:</b> ${options.value}<br>
+  <b>🚀 الخطوة:</b> ${action.value}<br>
+  <b>❗ في حال عدم التنفيذ:</b> ${risk.value}
+  `;
+  const d=new Date();
+  d.setDate(d.getDate()+7);
+  followDate.textContent=d.toLocaleDateString('ar-SA');
+}
+
+/* -------- PDF -------- */
+function downloadPDF(){
+  html2pdf().from(document.querySelector(".max-w-4xl"))
+  .save("جلسة_كوتشينج_GROW.pdf");
+}
+
+/* -------- Save Session -------- */
+function saveSession(){
+  let log=JSON.parse(localStorage.getItem("growLog")||"[]");
+  log.push({
+    date:new Date().toLocaleDateString('ar-SA'),
+    goal:goal.value
+  });
+  localStorage.setItem("growLog",JSON.stringify(log));
+  savedMsg.classList.remove("hidden");
+}
+
+/* -------- TIMER -------- */
+let totalTime=45*60;
+let remaining=totalTime;
+
+function startTimer(){
+  setInterval(()=>{
+    if(remaining<=0)return;
+    remaining--;
+
+    let m=Math.floor(remaining/60);
+    let s=remaining%60;
+    timeText.textContent=`${m}:${s.toString().padStart(2,"0")}`;
+
+    let percent=(remaining/totalTime)*100;
+    timeBar.style.width=percent+"%";
+
+    if(remaining<=600){
+      timeBar.className="h-2 bg-red-500 transition-all duration-1000";
+    }else if(remaining<=1200){
+      timeBar.className="h-2 bg-amber-400 transition-all duration-1000";
+    }else{
+      timeBar.className="h-2 bg-emerald-500 transition-all duration-1000";
+    }
+  },1000);
+}
+startTimer();
+</script>
 
 </body>
 </html>
