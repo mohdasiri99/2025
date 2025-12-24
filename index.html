@@ -2,195 +2,191 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>جلسة كوتشينج احترافية – GROW</title>
+<title>لوحة كوتشينج احترافية – GROW</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-<!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
 
 <style>
-body{
-  font-family:'Cairo',sans-serif;
-  background:linear-gradient(135deg,#eef2ff,#f8fafc);
-}
+body{font-family:'Cairo',sans-serif;background:#f1f5f9}
 .step{display:none}
 .step.active{display:block}
-.btn{
-  background:#4f46e5;
-  color:white;
-  padding:12px 28px;
-  border-radius:14px;
-  font-weight:800;
-}
+.btn{background:#4f46e5;color:white;padding:12px 26px;border-radius:14px;font-weight:800}
+.card{background:white;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
 </style>
 </head>
 
 <body class="text-slate-800">
 
-<div class="max-w-4xl mx-auto my-10 bg-white rounded-3xl shadow-2xl p-8">
-
-<!-- TITLE -->
-<h1 class="text-3xl font-extrabold text-center text-indigo-900 mb-4">
-جلسة كوتشينج احترافية – نموذج GROW
+<!-- DASHBOARD -->
+<div id="dashboard" class="max-w-5xl mx-auto my-10 card p-8">
+<h1 class="text-3xl font-extrabold text-indigo-900 mb-6 text-center">
+لوحة تحكم جلسات الكوتشينج
 </h1>
 
-<!-- TIMER -->
-<div class="mb-8 bg-slate-100 rounded-xl overflow-hidden shadow-inner">
-  <div class="flex justify-between items-center px-4 py-2 text-xs font-bold">
-    <span>⏳ الوقت المتبقي في الجلسة</span>
-    <span id="timeText">45:00</span>
-  </div>
-  <div class="h-2 bg-slate-200">
-    <div id="timeBar" class="h-2 bg-emerald-500 transition-all duration-1000" style="width:100%"></div>
-  </div>
+<div class="grid md:grid-cols-3 gap-6 mb-6">
+<div class="bg-indigo-50 p-4 rounded-xl text-center">
+<p class="text-sm font-bold">عدد الجلسات</p>
+<p id="countSessions" class="text-3xl font-extrabold text-indigo-700">0</p>
 </div>
 
-<!-- STEP 1 -->
+<div class="bg-emerald-50 p-4 rounded-xl text-center">
+<p class="text-sm font-bold">آخر جلسة</p>
+<p id="lastSession" class="text-sm font-bold text-emerald-700">—</p>
+</div>
+
+<div class="bg-sky-50 p-4 rounded-xl text-center">
+<p class="text-sm font-bold">الجاهزية</p>
+<p class="text-sm font-extrabold text-sky-700">جاهز للبدء</p>
+</div>
+</div>
+
+<button onclick="startSession()" class="btn mx-auto block mb-6">
+🚀 بدء جلسة جديدة
+</button>
+
+<h2 class="font-extrabold mb-3">📂 سجل الإنجاز</h2>
+<ul id="logList" class="text-sm space-y-2"></ul>
+</div>
+
+<!-- SESSION -->
+<div id="session" class="max-w-4xl mx-auto my-10 card p-8 hidden">
+
+<h1 class="text-2xl font-extrabold text-indigo-900 text-center mb-4">
+جلسة كوتشينج – نموذج GROW
+</h1>
+
+<!-- GLOBAL TIMER -->
+<div class="mb-6">
+<div class="flex justify-between text-xs font-bold">
+<span>⏳ زمن الجلسة</span>
+<span id="globalTime">45:00</span>
+</div>
+<div class="h-2 bg-slate-200 rounded">
+<div id="globalBar" class="h-2 bg-indigo-600 rounded" style="width:100%"></div>
+</div>
+</div>
+
+<!-- STEP TIMER -->
+<div class="mb-6">
+<div class="flex justify-between text-xs font-bold">
+<span id="stepTitle">المرحلة الحالية</span>
+<span id="stepTime">00:00</span>
+</div>
+<div class="h-2 bg-slate-200 rounded">
+<div id="stepBar" class="h-2 bg-emerald-500 rounded" style="width:100%"></div>
+</div>
+</div>
+
+<!-- STEPS -->
 <div id="step1" class="step active">
-<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🎯 G – الهدف</h2>
-<textarea id="goal" class="w-full border rounded-xl p-3" placeholder="ما الهدف الذي تريد تحقيقه؟"></textarea>
-<input id="goalRate" type="number" min="1" max="10"
-class="mt-3 border rounded-xl p-2 w-40" placeholder="أهميته 1–10">
+<h2 class="font-extrabold text-indigo-700 mb-2">🎯 الهدف</h2>
+<textarea id="goal" class="w-full border rounded-xl p-3" placeholder="ما هدفك؟"></textarea>
 <button onclick="nextStep(1)" class="btn mt-4">التالي</button>
 </div>
 
-<!-- STEP 2 -->
 <div id="step2" class="step">
-<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🔍 R – الواقع</h2>
+<h2 class="font-extrabold text-indigo-700 mb-2">🔍 الواقع</h2>
 <textarea id="reality" class="w-full border rounded-xl p-3" placeholder="أين أنت الآن؟"></textarea>
-<textarea id="challenges" class="w-full border rounded-xl p-3 mt-2" placeholder="ما التحديات؟"></textarea>
 <button onclick="nextStep(2)" class="btn mt-4">التالي</button>
 </div>
 
-<!-- STEP 3 -->
 <div id="step3" class="step">
-<h2 class="text-xl font-extrabold text-indigo-700 mb-3">💡 O – الخيارات</h2>
-<textarea id="options" class="w-full border rounded-xl p-3" placeholder="ما الخيارات المتاحة؟"></textarea>
-<input id="bestOption" class="w-full border rounded-xl p-3 mt-2" placeholder="الخيار الأنسب الآن">
+<h2 class="font-extrabold text-indigo-700 mb-2">💡 الخيارات</h2>
+<textarea id="options" class="w-full border rounded-xl p-3" placeholder="ما الخيارات؟"></textarea>
 <button onclick="nextStep(3)" class="btn mt-4">التالي</button>
 </div>
 
-<!-- STEP 4 -->
 <div id="step4" class="step">
-<h2 class="text-xl font-extrabold text-indigo-700 mb-3">🚀 W – الالتزام</h2>
-<input id="action" class="w-full border rounded-xl p-3" placeholder="أول خطوة عملية">
-<input id="date" type="date" class="mt-2 border rounded-xl p-2">
-<input id="commitment" type="number" min="1" max="10"
-class="mt-2 border rounded-xl p-2 w-40" placeholder="درجة الالتزام 1–10">
-
-<textarea id="risk" class="w-full border rounded-xl p-3 mt-3"
-placeholder="ما الذي سيحدث لو لم تنفذ؟"></textarea>
-
-<button onclick="nextStep(4)" class="btn mt-4">إنهاء الجلسة</button>
-</div>
-
-<!-- SUMMARY -->
-<div id="step5" class="step">
-<h2 class="text-xl font-extrabold text-emerald-700 mb-4">📋 ملخص الجلسة</h2>
-
-<div id="summary" class="text-sm space-y-2"></div>
-
-<hr class="my-4">
-
-<h3 class="font-bold">✍️ التوقيع</h3>
-<input id="client" class="border rounded-xl p-2 w-full mt-2" placeholder="اسم المستفيد">
-<input id="coach" class="border rounded-xl p-2 w-full mt-2" placeholder="اسم الكوتش">
-
-<p class="mt-3 text-xs text-slate-500">
-📅 متابعة بعد 7 أيام: <span id="followDate"></span>
-</p>
-
-<div class="flex gap-4 mt-6 flex-wrap">
-<button onclick="downloadPDF()" class="btn bg-emerald-600">تحميل PDF</button>
-<button onclick="saveSession()" class="btn bg-indigo-600">حفظ في سجل الإنجاز</button>
-</div>
-
-<p id="savedMsg" class="mt-3 text-green-600 font-bold hidden">
-✔️ تم حفظ الجلسة بنجاح
-</p>
+<h2 class="font-extrabold text-indigo-700 mb-2">🚀 الالتزام</h2>
+<textarea id="action" class="w-full border rounded-xl p-3" placeholder="ما أول خطوة؟"></textarea>
+<textarea id="risk" class="w-full border rounded-xl p-3 mt-2" placeholder="ماذا لو لم تنفذ؟"></textarea>
+<button onclick="finishSession()" class="btn mt-4">إنهاء الجلسة</button>
 </div>
 
 </div>
 
 <script>
-/* -------- Steps Logic -------- */
-function nextStep(n){
-  let valid=true;
-  document.querySelectorAll(`#step${n} textarea, #step${n} input`)
-    .forEach(el=>{if(!el.value)valid=false});
-  if(!valid){alert("فضلاً أكمل جميع الحقول");return;}
+/* -------- Dashboard -------- */
+function loadDashboard(){
+  let log=JSON.parse(localStorage.getItem("growLog")||"[]");
+  countSessions.textContent=log.length;
+  lastSession.textContent=log.length?log[log.length-1].date:"—";
+  logList.innerHTML="";
+  log.forEach(s=>{
+    let li=document.createElement("li");
+    li.textContent=`📅 ${s.date} – 🎯 ${s.goal}`;
+    logList.appendChild(li);
+  });
+}
+loadDashboard();
 
+function startSession(){
+  dashboard.classList.add("hidden");
+  session.classList.remove("hidden");
+  startGlobalTimer();
+  startStepTimer(0);
+}
+
+/* -------- Steps -------- */
+let currentStep=1;
+const steps=[
+{title:"🎯 الهدف",time:600},
+{title:"🔍 الواقع",time:600},
+{title:"💡 الخيارات",time:600},
+{title:"🚀 الالتزام",time:600}
+];
+
+function nextStep(n){
   document.getElementById(`step${n}`).classList.remove("active");
   document.getElementById(`step${n+1}`).classList.add("active");
-
-  if(n===4) buildSummary();
+  currentStep++;
+  startStepTimer(currentStep-1);
 }
 
-/* -------- Summary -------- */
-function buildSummary(){
-  summary.innerHTML=`
-  <b>🎯 الهدف:</b> ${goal.value}<br>
-  <b>📊 أهميته:</b> ${goalRate.value}/10<br>
-  <b>🔍 الواقع:</b> ${reality.value}<br>
-  <b>⚠️ التحديات:</b> ${challenges.value}<br>
-  <b>💡 الخيارات:</b> ${options.value}<br>
-  <b>🚀 الخطوة:</b> ${action.value}<br>
-  <b>❗ في حال عدم التنفيذ:</b> ${risk.value}
-  `;
-  const d=new Date();
-  d.setDate(d.getDate()+7);
-  followDate.textContent=d.toLocaleDateString('ar-SA');
+/* -------- Timers -------- */
+let global=45*60;
+let stepRemain=0;
+let stepInterval;
+
+function startGlobalTimer(){
+  setInterval(()=>{
+    if(global<=0)return;
+    global--;
+    let m=Math.floor(global/60);
+    let s=global%60;
+    globalTime.textContent=`${m}:${s.toString().padStart(2,"0")}`;
+    globalBar.style.width=(global/(45*60))*100+"%";
+  },1000);
 }
 
-/* -------- PDF -------- */
-function downloadPDF(){
-  html2pdf().from(document.querySelector(".max-w-4xl"))
-  .save("جلسة_كوتشينج_GROW.pdf");
+function startStepTimer(i){
+  clearInterval(stepInterval);
+  stepRemain=steps[i].time;
+  stepTitle.textContent=steps[i].title;
+
+  stepInterval=setInterval(()=>{
+    if(stepRemain<=0)return;
+    stepRemain--;
+    let m=Math.floor(stepRemain/60);
+    let s=stepRemain%60;
+    stepTime.textContent=`${m}:${s.toString().padStart(2,"0")}`;
+    stepBar.style.width=(stepRemain/steps[i].time)*100+"%";
+  },1000);
 }
 
-/* -------- Save Session -------- */
-function saveSession(){
+/* -------- Finish -------- */
+function finishSession(){
   let log=JSON.parse(localStorage.getItem("growLog")||"[]");
   log.push({
     date:new Date().toLocaleDateString('ar-SA'),
     goal:goal.value
   });
   localStorage.setItem("growLog",JSON.stringify(log));
-  savedMsg.classList.remove("hidden");
+  location.reload();
 }
-
-/* -------- TIMER -------- */
-let totalTime=45*60;
-let remaining=totalTime;
-
-function startTimer(){
-  setInterval(()=>{
-    if(remaining<=0)return;
-    remaining--;
-
-    let m=Math.floor(remaining/60);
-    let s=remaining%60;
-    timeText.textContent=`${m}:${s.toString().padStart(2,"0")}`;
-
-    let percent=(remaining/totalTime)*100;
-    timeBar.style.width=percent+"%";
-
-    if(remaining<=600){
-      timeBar.className="h-2 bg-red-500 transition-all duration-1000";
-    }else if(remaining<=1200){
-      timeBar.className="h-2 bg-amber-400 transition-all duration-1000";
-    }else{
-      timeBar.className="h-2 bg-emerald-500 transition-all duration-1000";
-    }
-  },1000);
-}
-startTimer();
 </script>
 
 </body>
